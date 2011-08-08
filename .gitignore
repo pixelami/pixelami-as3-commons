@@ -5,5 +5,9 @@ bin
 target
 .actionScriptProperties
 .flexLibProperties
+.flexProperties
 *.orig
 future
+bin-debug/
+html-template/
+3rd-party/*.swc
