@@ -6,14 +6,24 @@
 |_|                                   
 
 Pixelami Actionscript Commons
-
+------------------------------------------------------------------------------------------------------------------------
 Including:
 
 pixelami-amf-lib - An Actionscript 3 library to serialize objects to a from AS3
 pixelami-runner-lib - A Actionscript 3 library to queue and run methods across multiple frames if necessary
 
 
+The library can be built with Maven.
+http://maven.apache.org/
 
+To build:-
+$ mvn clean install
+
+NOTE
+pixelami-amf-examples depends on Parsley 2.4.0
+To install the Parsley swcs you can run the script in 3rd-party called parsley-maven-install.sh
+ 
+------------------------------------------------------------------------------------------------------------------------
 Pixelami AMF Library (pixelami-amf-lib)
 An Actionscript 3 library for serializing objects to and from AMF3 
 
@@ -22,7 +32,7 @@ The initial purpose is to allow strongly typed objects to be generated via AMF3 
 The deserializer will be used to create an asynchronous AM3 deserializer
 
 
-
+------------------------------------------------------------------------------------------------------------------------
 Pixelami Runner Library (pixelami-runner-lib)
 An Actionscript 3 library for queueing and running methods in the background
 
@@ -61,3 +71,9 @@ How to know when a particular batch of methods have completed ?
 The runner does not fire events - but you can add a final method to the runner the can fire an event or call a callback
 eg.
 run(function():void{dispatchEvent(new Event("complete"))},null,this);
+
+------------------------------------------------------------------------------------------------------------------------
+3rd-party
+
+Contains parsley-maven-install.sh which will install parsley 2.4 into your local maven repository.
+
