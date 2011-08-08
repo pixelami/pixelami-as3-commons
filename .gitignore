@@ -1,0 +1,9 @@
+.settings
+.FlexUnitSettings
+bin
+.project
+target
+.actionScriptProperties
+.flexLibProperties
+*.orig
+future

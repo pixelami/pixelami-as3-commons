@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+  	  <groupId>org.pixelami</groupId>
+  	  <artifactId>pixelami-as3-commons</artifactId>
+  	  <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <groupId>org.pixelami</groupId>
+  <artifactId>pixelami-amf-examples</artifactId>
+  <version>${project.parent.version}</version>
+  <packaging>swf</packaging>
+
+  <name>Pixelami AMF Examples</name>
+  
+  <properties>
+  	<parsley.version>2.4.0</parsley.version>
+  </properties>
+  
+  <build>
+    <sourceDirectory>src/main/flex</sourceDirectory>
+    <testSourceDirectory>src/test/flex</testSourceDirectory>
+  </build>
+  
+  <dependencies>
+  	<dependency>
+  	  <groupId>org.pixelami</groupId>
+  	  <artifactId>pixelami-amf-lib</artifactId>
+  	  <version>${project.parent.version}</version>
+	  <type>swc</type>
+  	</dependency>
+	
+	<dependency>
+  	  <groupId>org.spicefactory</groupId>
+  	  <artifactId>parsley-flex4</artifactId>
+  	  <version>${parsley.version}</version>
+	  <type>swc</type>
+	  <scope>external</scope>
+  	</dependency>
+	
+	<dependency>
+	  <groupId>org.spicefactory</groupId>
+	  <artifactId>spicelib-flex</artifactId>
+	  <version>${parsley.version}</version>
+	  <type>swc</type>
+	  <scope>external</scope>
+	</dependency>
+	
+	
+	
+  </dependencies>
+  <!--
+  <repositories>
+	<repository>
+	  <id>c3_os</id>
+	  <name>c3_os</name>
+	  <url>http://svn.code.sf.net/adobe/cairngorm/code/cairngorm3/maven-repository</url>
+	  <snapshots>
+		<enabled>true</enabled>
+		<checksumPolicy>ignore</checksumPolicy>
+	  </snapshots>
+	  <releases>
+		<enabled>true</enabled>
+		<checksumPolicy>ignore</checksumPolicy>
+	  </releases>
+	</repository>
+  </repositories>
+  -->
+</project>

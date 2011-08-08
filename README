@@ -1,0 +1,56 @@
+An Actionscript 3 library for running methods "in the background".
+
+e.g.
+import org.pixelami.backgroundrunner.run
+
+run(myMethod)
+
+run(myMethod,[myArg0])
+
+run(myMethod,[myArg0,myArg1,myArg2])
+
+run(myMethod,[myArg0,myArg1,myArg2],scope)
+
+
+Below the hood
+______________
+
+Functions are queued in a single stack.
+
+A single enterFrame handler shifts methods off the stack and passes an optional array of arguments 
+and optional scope argument to the apply() method of each Function.
+
+The Runner attempts to throttle how many methods get called per frame, thereby allowing the developer to 
+spread heavy processing tasks across several frames rather than grinding the frame rate to a halt 
+and blocking display updates.
+
+Well that's the theory at least.
+
+
+
+
+Comments
+________
+
+The API is kept deliberately simple, there is only one package method,
+
+run(method:Function,arguments:Array,scope:Object){}
+
+In future a priority argument may also be added ....
+
+
+How to
+______
+
+How to know when a particular batch of methods have completed ?
+
+In an effort to keep the library as simple as possible , I am avoiding building events into the library.
+Currently, the favored way to know when a batch of methods have completed is to add a final method that could 
+... if you wanted ... dispatch an Event.
+
+e.g.
+
+run(myMethod);
+...
+run(myMethod);
+run(function():void{dispatchEvent(new Event("complete"))});

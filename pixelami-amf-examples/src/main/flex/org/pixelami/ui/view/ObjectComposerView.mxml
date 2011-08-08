@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!---
+////////////////////////////////////////////////////////////////////////////////
+//
+//  pixelami.com
+//  Copyright 2011 Original Authors
+//  All Rights Reserved.
+//
+//  NOTICE: Pixelami permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+-->
+<s:Group 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:ns="http://www.spicefactory.org/parsley" 
+	width="400" height="300" 
+	>
+	<fx:Script>
+		<![CDATA[
+			import org.pixelami.ui.ObjectComposerContext;
+			import org.pixelami.ui.component.AttributeRendererFactory;
+			import org.pixelami.ui.model.ObjectComposerPM;
+			
+			[Bindable]
+			public var model:ObjectComposerPM;
+			
+			[Bindable]
+			public var rendererFactory:ClassFactory;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<ns:ContextBuilder
+			config="{ObjectComposerContext}"
+			/>
+		<ns:FastInject
+			property="model"
+			type="{ObjectComposerPM}"
+			/>
+		<ns:FastInject
+			property="rendererFactory"
+			type="{AttributeRendererFactory}"
+			/>
+	</fx:Declarations>
+	
+	<s:List
+		id="topLevelAttributeList"
+		dataProvider="{model.attributesCollection}"
+		itemRenderer="{rendererFactory}"
+		/>
+	<s:Button 
+		label="Add" 
+		click="model.createNew()" 
+		y="{topLevelAttributeList.x+topLevelAttributeList.height}"
+		/>
+	
+</s:Group>

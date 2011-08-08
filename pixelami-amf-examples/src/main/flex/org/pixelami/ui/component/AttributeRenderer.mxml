@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	autoDrawBackground="false"
+	>
+	<fx:Script>
+		<![CDATA[
+			import org.pixelami.ui.model.ObjectComposerPM;
+			public var model:ObjectComposerPM;
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="simple" />
+		<s:State name="enum" />
+		<s:State name="complex" />
+	</s:states>
+	
+	<s:layout>
+		<s:HorizontalLayout />
+	</s:layout>
+	<s:Label text="Field"/>
+	<s:TextInput id="fieldInput" text="@{data.name}"/>
+	<s:Label text="Type"/>
+	<s:TextInput id="typeInput" text="@{data.type}"/>
+	<s:Label text="Value"/>
+	<s:TextInput id="valueInput" text="@{data.value}"/>
+	<s:Button label="remove" click="{model.removeItemAt(itemIndex)}"/>
+</s:ItemRenderer>
