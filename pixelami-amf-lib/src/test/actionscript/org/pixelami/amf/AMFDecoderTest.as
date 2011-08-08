@@ -6,8 +6,10 @@ package org.pixelami.amf
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.flexunit.asserts.assertEquals;
 	import org.pixelami.amf.mock.SomeClass;
 	import org.pixelami.amf.mock.SomeItem;
+	import org.pixelami.util.Printer;
 
 	public class AMFDecoderTest
 	{		
@@ -39,7 +41,8 @@ package org.pixelami.amf
 			ba.position = 0;
 			var decoder:AMFDecoder = new AMFDecoder(ba);
 			var result:Object = decoder.readValue();
-			trace("result",result);
+			//trace("result",result);
+			assertEquals("hello world !",result)
 		}
 		
 		[Test]
@@ -50,7 +53,8 @@ package org.pixelami.amf
 			ba.position = 0;
 			var decoder:AMFDecoder = new AMFDecoder(ba);
 			var result:Object = decoder.readValue();
-			trace("result",result);
+			//trace("result",result);
+			assertEquals(2,(result as Array).length);
 		}
 		
 		[Test]
@@ -61,7 +65,8 @@ package org.pixelami.amf
 			ba.position = 0;
 			var decoder:AMFDecoder = new AMFDecoder(ba);
 			var result:Object = decoder.readValue();
-			trace("result",result);
+			//trace("result",result);
+			assertEquals(5,(result as Array).length);
 		}
 		
 		[Test]
@@ -73,6 +78,8 @@ package org.pixelami.amf
 			var decoder:AMFDecoder = new AMFDecoder(ba);
 			var result:Object = decoder.readValue();
 			trace("result",ObjectUtil.toString(result));
+			assertEquals(result.label,"foo");
+			assertEquals(result.value,"bar");
 		}
 		
 		
@@ -88,7 +95,9 @@ package org.pixelami.amf
 			ba.position = 0;
 			var decoder:AMFDecoder = new AMFDecoder(ba);
 			var result:Object = decoder.readValue();
-			trace("result",ObjectUtil.toString(result));
+			//trace("result",ObjectUtil.toString(result));
+			assertEquals(result.property1,"foo");
+			assertEquals(result.property2,"bar");
 		}
 		
 		
@@ -109,7 +118,12 @@ package org.pixelami.amf
 			ba.position = 0;
 			var decoder:AMFDecoder = new AMFDecoder(ba);
 			var result:Object = decoder.readValue();
-			trace("result",ObjectUtil.toString(result));
+			//trace("result",ObjectUtil.toString(result));
+			assertEquals(result.property1,"foo");
+			assertEquals(result.property2,"bar");
+			assertEquals(2,result.arrayProperty.length);
+			var item:Object = result.arrayProperty[0];
+			assertEquals("foo",item.label);
 		}
 
 

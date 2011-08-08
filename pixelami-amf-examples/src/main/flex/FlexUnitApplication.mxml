@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!---
+////////////////////////////////////////////////////////////////////////////////
+//
+//  pixelami.com
+//  Copyright 2011 Original Authors
+//  All Rights Reserved.
+//
+//  NOTICE: Pixelami permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!-- This is an auto generated file and is not intended for modification. -->
+
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:flexui="flexunit.flexui.*"
+			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
+	<fx:Script>
+		<![CDATA[
+			import org.pixelami.amf.U29Test;
+			import org.pixelami.amf.ObjectDescriptorTest;
+			import org.pixelami.amf.AMFEncoderTest;
+			import org.pixelami.amf.AMFDecoderTest;
+			
+			public function currentRunTestSuite():Array
+			{
+				var testsToRun:Array = new Array();
+				testsToRun.push(org.pixelami.amf.AMFDecoderTest);
+				testsToRun.push(org.pixelami.amf.AMFEncoderTest);
+				testsToRun.push(org.pixelami.amf.ObjectDescriptorTest);
+				testsToRun.push(org.pixelami.amf.U29Test);
+				return testsToRun;
+			}
+			
+			
+			private function onCreationComplete():void
+			{
+				testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "pixelami-amf-examples");
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<flexui:FlexUnitTestRunnerUI id="testRunner">
+	</flexui:FlexUnitTestRunnerUI>
+</s:Application>

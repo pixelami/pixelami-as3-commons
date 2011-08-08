@@ -11,6 +11,10 @@
 
 package org.pixelami.amf
 {
+	import flash.utils.Dictionary;
+	import flash.utils.describeType;
+	import flash.utils.getQualifiedClassName;
+
 	public class TypeUtil
 	{
 		/**
@@ -22,9 +26,7 @@ package org.pixelami.amf
 		
 		public static function getPropertiesAndAccessors(o:Object):Array
 		{
-			//var record:XML = DescribeTypeCache.getDescription(o);
-			var classInfo:XML = DescribeTypeCache.getDescription(o);//record.typeDescription;
-			//var classInfo:XML = describeType( a );
+			var classInfo:XML = getDescription(o);
 			var a:Array = [];
 			
 			for each ( var v:XML in classInfo..*.( 
@@ -46,6 +48,19 @@ package org.pixelami.amf
 			}
 			
 			return a;
+		}
+		
+		private static var cache:Dictionary = new Dictionary(true);
+		
+		public static function getDescription(type:Object):XML
+		{
+			var xml:XML = cache[getQualifiedClassName(type)];
+			if(!xml)
+			{
+				xml = describeType(type);
+				cache[getQualifiedClassName(type)] = xml;
+			}
+			return xml;
 		}
 	}
 }

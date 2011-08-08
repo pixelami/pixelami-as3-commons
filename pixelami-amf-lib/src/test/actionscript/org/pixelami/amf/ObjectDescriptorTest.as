@@ -11,6 +11,7 @@ package org.pixelami.amf
 	import org.flexunit.asserts.assertTrue;
 	import org.pixelami.amf.mock.SomeClass;
 	import org.pixelami.amf.mock.SomeItem;
+	import org.pixelami.util.Printer;
 	
 	public class ObjectDescriptorTest
 	{		
@@ -253,7 +254,15 @@ package org.pixelami.amf
 			trace("NESTED BITS >>>");
 			Printer.printBits(ba);
 			ba.position = 0;
-			trace("nested ObjectDescriptor",ObjectUtil.toString(ba.readObject()));
+			
+			var result:Object = ba.readObject();
+			trace("nested ObjectDescriptor",ObjectUtil.toString(result));
+			assertEquals("foo", result.property1);
+			
+			var someClass:SomeClass = result as SomeClass;
+			var nestedSomeClass:SomeClass = someClass.arrayProperty[0] as SomeClass;
+			assertNotNull(nestedSomeClass);
+			assertEquals("bar",nestedSomeClass.property1);
 		}
 	}
 }

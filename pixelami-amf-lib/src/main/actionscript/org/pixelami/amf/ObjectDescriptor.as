@@ -9,6 +9,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+
+// TODO refactor to extend AMFEncoder
 package org.pixelami.amf
 {
 	import flash.net.getClassByAlias;
@@ -21,8 +23,6 @@ package org.pixelami.amf
 	
 	import mx.utils.ObjectUtil;
 	
-	//import org.pixelami.utils.ClassUtils;
-
 	public class ObjectDescriptor implements IExternalizable
 	{
 		private var _referenceTable:ReferenceTable = new ReferenceTable();
@@ -199,14 +199,7 @@ package org.pixelami.amf
 				case "Boolean": 
 					writeBoolean(output,value); 
 					break;
-				/*
-				case "XML":	
-				case "XMLDocument":
-				case "Date": 	
-				case "Array": 	
-				case "Object": 	
-					writeReferencableObject(output, value, className);
-				*/
+
 				default: 		
 					writeReferencableObject(output, value, className);
 			}
@@ -240,13 +233,6 @@ package org.pixelami.amf
 				default: 	
 					writeObject(output, value, objectType);
 			}
-		}
-		
-		
-		private function writeType(output:IDataOutput, value:*, className:String):void
-		{
-			// TODO Auto Generated method stub
-			
 		}
 		
 		private function writeU29Ref(output:IDataOutput,value:*):Boolean

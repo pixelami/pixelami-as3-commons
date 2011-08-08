@@ -3,6 +3,9 @@ package org.pixelami.amf
 	import flash.utils.ByteArray;
 	
 	import mx.utils.ObjectUtil;
+	
+	import org.flexunit.asserts.assertEquals;
+	import org.pixelami.util.Printer;
 
 	public class AMFEncoderTest
 	{		
@@ -33,7 +36,9 @@ package org.pixelami.amf
 			var encoder:AMFEncoder = new AMFEncoder(ba);
 			encoder.writeValue("hello world !");
 			ba.position = 0;
-			trace("result",ba.readObject());
+			var result:Object = ba.readObject();
+			trace("result",result);
+			assertEquals("hello world !",result);
 		}
 		
 		
@@ -50,7 +55,10 @@ package org.pixelami.amf
 			var encoder:AMFEncoder = new AMFEncoder(ba);
 			encoder.writeValue(o);
 			ba.position = 0;
-			trace("result",ObjectUtil.toString(ba.readObject()));
+			var result:Object = ba.readObject();
+			//trace("result",ObjectUtil.toString(result));
+			
+			assertEquals(o.label, result.label);
 		}
 		
 	}
