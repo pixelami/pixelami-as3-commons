@@ -15,7 +15,7 @@
   
   <properties>
 	<flex.sdk.version>4.1.0.16076</flex.sdk.version>
-	<flexunit.version>4.0-rc-1</flexunit.version>
+	<flexunit.version>4.1.0-beta3</flexunit.version>
 	<flexmojos.version>3.9</flexmojos.version>
 	<flashplayer.version>10.1</flashplayer.version>
   </properties>

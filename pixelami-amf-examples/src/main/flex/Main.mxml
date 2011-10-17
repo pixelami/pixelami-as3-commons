@@ -17,9 +17,23 @@
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:view="org.pixelami.ui.view.*"	
 	minWidth="955" minHeight="600" 
+	xmlns:parsley="http://www.spicefactory.org/parsley" 
 	>
+	<fx:Style source="Main.css"/>
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<parsley:ContextBuilder
+			config="{MainConfig}"
+			/>
 	</fx:Declarations>
-	<view:ObjectComposerView />
+	<fx:Script>
+		<![CDATA[
+			import org.pixelami.ui.view.ObjectComposerView;
+			
+			private var views:Array = [
+				ObjectComposerView
+			];
+		]]>
+	</fx:Script>
+	<!--<view:ObjectComposerView />-->
+	<view:ClassBrowserView />
 </s:Application>

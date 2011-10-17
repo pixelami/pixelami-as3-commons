@@ -13,8 +13,8 @@ package org.pixelami.ui.model
 {
 	import mx.collections.ArrayCollection;
 	
-	import org.pixelami.amf.ObjectDescriptor;
-	import org.pixelami.amf.TypedAttribute;
+	import org.pixelami.util.ObjectDescriptor;
+	import org.pixelami.util.TypedAttribute;
 
 	public class ObjectComposerPM
 	{

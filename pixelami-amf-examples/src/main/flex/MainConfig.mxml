@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!---
+////////////////////////////////////////////////////////////////////////////////
+//
+//  pixelami.com
+//  Copyright 2011 Original Authors
+//  All Rights Reserved.
+//
+//  NOTICE: Pixelami permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+-->
+<ns:Objects
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:ns="http://www.spicefactory.org/parsley" xmlns:model="org.pixelami.ui.model.*"
+	>
+	<fx:Declarations>
+		<model:ClassBrowserPM />
+	</fx:Declarations>
+</ns:Objects>

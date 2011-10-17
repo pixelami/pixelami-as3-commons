@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+
+	<fx:Metadata>
+		[Event(name="apply",type="org.pixelami.ui.event.FilterEvent")]
+	</fx:Metadata>
+
+
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import org.pixelami.ui.event.FilterEvent;
+			
+			static public var INCLUDE:String = "include";
+			static public var EXCLUDE:String = "exclude";
+			
+			static public var APPLY:String = "apply";
+			
+			public var included:int;
+			
+			
+			
+			protected function applyBtn_clickHandler(event:MouseEvent):void
+			{
+				included = includeExcludeGroup.selectedValue == INCLUDE ? 1 : -1;
+				dispatchEvent(new FilterEvent(FilterEvent.APPLY));
+			}
+		
+			protected function includeExcludeGroup_changeHandler(event:Event):void
+			{
+				trace(event);
+				trace("input: "+input.text);
+				
+				included = RadioButtonGroup(event.currentTarget).selectedValue == INCLUDE ? 1 : -1;
+				dispatchEvent(new FilterEvent(FilterEvent.APPLY));
+			}
+			
+			protected function input_enterHandler(event:FlexEvent):void
+			{
+				included = includeExcludeGroup.selectedValue == INCLUDE ? 1 : -1;
+				dispatchEvent(new FilterEvent(FilterEvent.APPLY));
+			}
+			
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<s:RadioButtonGroup id="includeExcludeGroup" change="includeExcludeGroup_changeHandler(event)" selectedValue="include"/>
+	</fx:Declarations>
+	<s:layout>
+		<s:HorizontalLayout paddingLeft="5" verticalAlign="bottom"/>
+	</s:layout>
+	<s:Label text="Pattern" verticalAlign="middle" verticalCenter="1"/>
+	
+	<s:TextInput id="input" width="100%" enter="input_enterHandler(event)"/>
+	
+	<s:RadioButton groupName="includeExcludeGroup" value="include" label="include" />
+	<s:RadioButton groupName="includeExcludeGroup" value="exclude" label="exclude"/>
+	
+	<!--<s:Button id="applyBtn" label="apply" click="applyBtn_clickHandler(event)"/>-->
+</s:Group>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+//  pixelami.com
+//  Copyright 2011 Original Authors
+//  All Rights Reserved.
+//
+//  NOTICE: Pixelami permits you to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+-->
+
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="org.pixelami.ui.component.*"
+		 width="800" height="600" 
+		 xmlns:parsley="http://www.spicefactory.org/parsley" 
+		 >
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.describeType;
+			import flash.utils.getDefinitionByName;
+			
+			import mx.utils.ObjectUtil;
+			
+			import org.pixelami.ui.model.ClassBrowserPM;
+			import org.pixelami.ui.model.DefinitionInfo;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			public var model:ClassBrowserPM;
+			
+			protected function getLabel(item:Object):String
+			{
+				return item.name;
+			}
+			
+			protected function selectablesortablelist1_changeHandler(event:IndexChangeEvent):void
+			{
+				var className:String = event.currentTarget.list.selectedItem.name;
+				className = className.split("::").join(".");
+				model.setFocusedClassName(className);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:FastInject
+			type="{ClassBrowserPM}"
+			property="model"
+			/>
+	</fx:Declarations>
+	<component:SelectableSortableList 
+		dataProvider="{model.definitionList}"
+		height="100%"
+		width="400"
+		labelFunction="getLabel"
+		change="selectablesortablelist1_changeHandler(event)"
+		/>
+	<s:TextArea 
+		id="details"
+		width="400"
+		height="100%"
+		left="400"
+		text="{model.classReport}"
+		/>
+</s:Group>

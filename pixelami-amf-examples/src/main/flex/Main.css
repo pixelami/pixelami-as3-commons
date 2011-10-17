@@ -1,0 +1,13 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+@namespace pixelami "org.pixelami.ui.component.*";
+
+pixelami|SelectableSortableList {
+	skinClass:ClassReference("org.pixelami.ui.skin.SelectableSortableListSkin");
+}
+
+Button {
+	skinClass:ClassReference("spark.components.Button");
+}

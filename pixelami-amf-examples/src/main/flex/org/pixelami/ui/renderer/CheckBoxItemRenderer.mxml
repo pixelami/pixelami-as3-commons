@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<renderer:SelectableItemRenderer
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+	xmlns:renderer="org.pixelami.ui.renderer.*"
+	>
+	<s:CheckBox id="cb" selected="@{itemSelected}" left="5" />
+	<s:RichText id="labelDisplay" left="27" top="6"/>
+</renderer:SelectableItemRenderer>
