@@ -33,8 +33,8 @@ package org.pixelami.amf
 		public function testEncodeString():void
 		{
 			var ba:ByteArray = new ByteArray();
-			var encoder:AMFEncoder = new AMFEncoder(ba);
-			encoder.writeValue("hello world !");
+			var encoder:AMFEncoder = new AMFEncoder();
+			encoder.writeValue(ba,"hello world !");
 			ba.position = 0;
 			var result:Object = ba.readObject();
 			trace("result",result);
@@ -52,8 +52,8 @@ package org.pixelami.amf
 			Printer.printBits(ba);
 			
 			ba = new ByteArray()
-			var encoder:AMFEncoder = new AMFEncoder(ba);
-			encoder.writeValue(o);
+			var encoder:AMFEncoder = new AMFEncoder();
+			encoder.writeValue(ba,o);
 			ba.position = 0;
 			var result:Object = ba.readObject();
 			//trace("result",ObjectUtil.toString(result));

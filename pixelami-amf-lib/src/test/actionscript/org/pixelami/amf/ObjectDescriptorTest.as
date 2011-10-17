@@ -2,8 +2,10 @@ package org.pixelami.amf
 {	
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
+	import flash.utils.describeType;
 	import flash.utils.getQualifiedClassName;
 	
+	import mx.collections.ArrayCollection;
 	import mx.utils.ObjectUtil;
 	
 	import org.flexunit.asserts.assertEquals;
@@ -11,7 +13,9 @@ package org.pixelami.amf
 	import org.flexunit.asserts.assertTrue;
 	import org.pixelami.amf.mock.SomeClass;
 	import org.pixelami.amf.mock.SomeItem;
+	import org.pixelami.util.ObjectDescriptor;
 	import org.pixelami.util.Printer;
+	import org.pixelami.util.TypedAttribute;
 	
 	public class ObjectDescriptorTest
 	{		
@@ -187,6 +191,7 @@ package org.pixelami.amf
 		{
 			var o:SomeClass = new SomeClass();
 			o.property1 = "foo";
+			
 			var array:Array = [new SomeItem("bar",1),new SomeItem("bar",2),new SomeItem("bar",3)];
 			o.arrayProperty = array;
 			
@@ -263,6 +268,64 @@ package org.pixelami.amf
 			var nestedSomeClass:SomeClass = someClass.arrayProperty[0] as SomeClass;
 			assertNotNull(nestedSomeClass);
 			assertEquals("bar",nestedSomeClass.property1);
+		}
+		
+		
+		[Test] 
+		public function testArrayObjectDescriptor():void
+		{
+			var ba:ByteArray;
+			var a:Array = [1,2,3];
+			
+			var o:ObjectDescriptor = new ObjectDescriptor();
+			o.type = "Array";
+			o.addAttribute(new TypedAttribute("0","uint",1));
+			o.addAttribute(new TypedAttribute("1","uint",2));
+			o.addAttribute(new TypedAttribute("2","uint",3));
+			
+			ba = new ByteArray();
+			o.writeExternal(ba);
+			trace("ARRAY BITS >>>");
+			Printer.printBits(ba);
+			ba.position = 0;
+			
+			var result:Object = ba.readObject();
+			trace("nested ObjectDescriptor",ObjectUtil.toString(result));
+			assertEquals(1, result[0]);
+		}
+		
+		
+		[Test] 
+		public function testArrayCollectionDescriptor():void
+		{
+			var ba:ByteArray;
+			var a:ArrayCollection = new ArrayCollection([1,2,3]);
+			
+			var o:ObjectDescriptor = new ObjectDescriptor();
+			o.type = "SomeRequest";
+			
+			var desc:XML = describeType(ArrayCollection);
+			var classAlias:String = desc.@alias;
+			trace("classAlias",classAlias);
+			//o.addAttribute(new TypedAttribute("collection",(getQualifiedClassName(ArrayCollection)),new ArrayCollection([1,2,3])));
+			//o.addAttribute(new TypedAttribute("collection","flex.messaging.io.ArrayCollection",new ArrayCollection([1,2,3])));
+			o.addAttribute(new TypedAttribute("collection",classAlias,new ArrayCollection([1,2,3])));
+			
+			//o.addAttribute(new TypedAttribute("1","uint",2));
+			//o.addAttribute(new TypedAttribute("2","uint",3));
+			
+			ba = new ByteArray();
+			o.writeExternal(ba);
+			trace("NESTED BITS >>>");
+			Printer.printBits(ba);
+			ba.position = 0;
+			
+			var result:Object = ba.readObject();
+			trace("ObjectDescriptor",ObjectUtil.toString(result));
+			var collection:ArrayCollection = result.collection;
+			var item0:uint = collection.getItemAt(0) as uint;
+			trace("item0",item0);
+			assertTrue(1 == item0);
 		}
 	}
 }
