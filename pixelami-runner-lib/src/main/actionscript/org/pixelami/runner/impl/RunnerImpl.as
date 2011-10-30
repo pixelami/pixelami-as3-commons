@@ -95,7 +95,7 @@ package org.pixelami.runner.impl
 				running = false;
 				return;
 			}
-			log(currentInvokation);
+			//log(currentInvokation);
 			currentInvokation.execute();
 		}
 		

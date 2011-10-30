@@ -38,8 +38,7 @@ package org.pixelami.runner
 			p.addEventListener(Event.COMPLETE,asyncCompleteHandler);
 			
 			Async.proceedOnEvent(this,dispatcher,Event.COMPLETE,2000,timeoutHandler);
-			p.start();
-			//p.complete();
+			p.start(1000);
 		}
 		
 		private function asyncCompleteHandler(event:Event):void

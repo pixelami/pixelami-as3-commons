@@ -18,24 +18,21 @@ package org.pixelami.runner
 	{
 		public function SaySomethingProcess()
 		{
+			super(null);
 		}
 		
 		public function start(count:uint = 1000):void
 		{
-			//for(var i:uint = 0; i < count; i++)
 			while (--count > 0)
 			{
-				Runner.instance.run(say,["something"]);
+				run(say,["something"]);
 			}
 			//trace("adding complete callback");
-			Runner.instance.run(complete,null,this);
-			
-			//complete();
+			run(complete,null,this);
 		}
 		
 		public function say(string:String):void
 		{
-			//trace("say:",string);
 			var a:String = string;
 		}
 		
@@ -43,7 +40,6 @@ package org.pixelami.runner
 		{
 			trace("COMPLETE");
 			dispatchEvent(new Event(Event.COMPLETE));
-			
 		}
 	}
 }

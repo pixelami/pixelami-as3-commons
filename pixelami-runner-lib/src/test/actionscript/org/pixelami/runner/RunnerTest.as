@@ -38,7 +38,7 @@ package org.pixelami.runner
 		}
 		
 		
-		[Ignore(description="The test using org.pixelami.runner.RunnerImpl break in flemojos, but work in Flash Builder 4/4.5")]
+		[Ignore(description="The test using org.pixelami.runner.impl.RunnerImpl break in flemojos, but work in Flash Builder 4/4.5")]
 		[Test(async,timeout=2000)]
 		public function simpleProcessTest():void
 		{
@@ -47,7 +47,6 @@ package org.pixelami.runner
 
 			Async.proceedOnEvent(this,dispatcher,Event.COMPLETE,2000,timeoutHandler);
 			p.start();
-			//p.complete();
 		}
 		
 		private function asyncCompleteHandler(event:Event):void

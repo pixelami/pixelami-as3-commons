@@ -18,19 +18,16 @@ package org.pixelami.runner
 	{
 		public function SaySomethingNestedProcess()
 		{
+			super(null);
 		}
 		
 		public function start(count:uint = 100):void
 		{
-			//for(var i:uint = 0; i < count; i++)
 			while (--count > 0)
 			{
 				run(say,["something",count]);
 			}
-			//trace("adding complete callback");
 			run(complete,null,this);
-			
-			//complete();
 		}
 		
 		public function say(string:String,n:Object):void
@@ -39,7 +36,9 @@ package org.pixelami.runner
 			var a:String = string;
 			for(var i:uint = 0; i < 10; i++)
 			{
-				var fn:Function = function(n:uint):void{trace("inner",n);}
+				var fn:Function = function(n:uint):void {
+					trace("inner",n);
+				};
 				run(fn,[i]);
 			}
 		}
@@ -48,7 +47,6 @@ package org.pixelami.runner
 		{
 			trace("COMPLETE");
 			dispatchEvent(new Event(Event.COMPLETE));
-			
 		}
 	}
 }

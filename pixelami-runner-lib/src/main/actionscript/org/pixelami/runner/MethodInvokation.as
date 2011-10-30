@@ -24,6 +24,8 @@ package org.pixelami.runner
 		
 		private static var _instances:Vector.<MethodInvokation> = new Vector.<MethodInvokation>();
 		
+		private var _childInvokations:Vector.<MethodInvokation> = new Vector.<MethodInvokation>();
+		
 		public var parent:MethodInvokation;
 		
 		/**
@@ -61,17 +63,25 @@ package org.pixelami.runner
 		 */
 		public var scope:*;
 		
-		public var id:uint;
+		private var _id:uint;
+		public function get id():uint
+		{
+			return _id;
+		}
+		
+		private var _executed:Boolean;
+		
+		
 		
 		public function MethodInvokation(method:Function, args:Array, scope:*=null)
 		{
 			this.method = method;
 			this.args = args;
 			this.scope = scope;
-			id = INVOKATION_INSTANCE_ID++;
+			_id = INVOKATION_INSTANCE_ID++;
 		}
 		
-		private var _executed:Boolean;
+		
 		/**
 		 * executes the method
 		 */
@@ -81,22 +91,7 @@ package org.pixelami.runner
 			_executed = true;
 		}
 		
-		public function recycle():void
-		{
-			if(_instances.length < MAX_INSTANCES)
-			{
-				_instances.push(this);
-			}
-			
-		}
 		
-		public function toString():String
-		{
-			var pid:String = parent ? String(parent.id) : "null"
-			return "Invokation - [id=" + id + " parent id=" + pid + "]";
-		}
-		
-		private var _childInvokations:Vector.<MethodInvokation> = new Vector.<MethodInvokation>();
 		public function addChildInvokation(methodInvokation:MethodInvokation):void
 		{
 			methodInvokation.parent = this;
@@ -105,11 +100,40 @@ package org.pixelami.runner
 		
 		public function getNextInvokation():MethodInvokation
 		{
+			// we should be returned first so that any new invokations 
+			// created as a result of our execution can be added to our children
 			if(!_executed) return this;
+			// if we have had children then return them FIFO
 			if(_childInvokations.length > 0) return _childInvokations.shift();
-			destroy();
+			// we've been executed and so have all our children
+			// so let's recyle ourself
+			recycle();
+			// we have a parent so pass the reference to the next invokation
 			if(parent) return parent.getNextInvokation();
+			// we've exhausted all avenues, we must be back at root.
 			return null;
 		}
+		
+		public function toString():String
+		{
+			var pid:String = parent ? String(parent.id) : "null"
+			return "Invokation - [id=" + _id + " parent id=" + pid + "]";
+		}
+		
+		protected function recycle():void
+		{
+			if(_instances.length < MAX_INSTANCES)
+			{
+				// reset the instance.
+				_executed = false;
+				this.method = null;
+				this.args = null;
+				this.scope = null;
+				
+				_instances.push(this);
+			}
+			
+		}
+		
 	}
 }
