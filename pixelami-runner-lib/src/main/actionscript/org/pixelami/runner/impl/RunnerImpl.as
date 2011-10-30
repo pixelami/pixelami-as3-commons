@@ -9,51 +9,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package org.pixelami.runner
+package org.pixelami.runner.impl
 {
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.utils.getTimer;
+	
+	import mx.utils.ObjectUtil;
+	
+	import org.pixelami.runner.IRunner;
+	import org.pixelami.runner.MethodInvokation;
 	
 
 	public class RunnerImpl implements IRunner
 	{
 		private var loaderInfo:LoaderInfo;
 		
+		private var currentInvokation:MethodInvokation;
+		
 		public function RunnerImpl(loaderInfo:LoaderInfo)
 		{
 			this.loaderInfo = loaderInfo;
 			var mspf:int = calculateMSPerFrame();
 			maxExecutionTime = mspf - (mspf * .39);
-			//trace("maxExecutionTime",maxExecutionTime);
+			//log("maxExecutionTime",maxExecutionTime);
 		}
-		
-		
 		
 		public function calculateMSPerFrame():int
 		{
 			return 1000 / loaderInfo.content.stage.frameRate;
 		}
 		
-		private var invokationQueue:Vector.<MethodInvokation> = new Vector.<MethodInvokation>();
-
 		private var frameCounter:uint;
 		private var running:Boolean;
 		
 		public function run(method:Function, args:Array = null, scope:Object = null):void
 		{
-			invokationQueue.push(MethodInvokation.getMethodInvokation(method, args, scope));
+			if(!currentInvokation)
+			{
+				currentInvokation = MethodInvokation.getMethodInvokation(function():void{
+					trace("root invokation executed");
+				});
+			}
+			
+			currentInvokation.addChildInvokation(MethodInvokation.getMethodInvokation(method, args, scope));
 			
 			if(!running)
 			{
-				trace("invokationQueue.length",invokationQueue.length);
-				// start processing
 				running = true;
 				frameCounter = 0;
 				frameStart = getTimer();
 				loaderInfo.content.addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			}
-			
 		}
 		
 		private var previousFrameDuration:int = 0;
@@ -64,12 +71,10 @@ package org.pixelami.runner
 			var t:uint = getTimer();
 			previousFrameDuration = t - frameStart;
 			log("previousFrameDuration",previousFrameDuration);
-			log("invokationQueue.length",invokationQueue.length);
 			frameStart = t;
 			
 			var lastExecutionDuration:int = 0;
 			while(running && getTimer() - frameStart < maxExecutionTime - lastExecutionDuration)
-			//while(getTimer() - frameStart < previousFrameDuration - lastExecutionDuration)
 			{
 				t = getTimer();
 				processQueue();
@@ -79,27 +84,19 @@ package org.pixelami.runner
 		
 		public function processQueue():void
 		{
-			var invokation:MethodInvokation = invokationQueue.shift();
-			//log(invokation);
-			invokation.execute();
-			invokation.destroy();
+			currentInvokation = currentInvokation.getNextInvokation();
 			
-			if(invokationQueue.length == 1)
+			if(!currentInvokation) 
 			{
-				trace("loaderInfo.content",loaderInfo.content);
 				if(loaderInfo.content)
 				{
 					loaderInfo.content.removeEventListener(Event.ENTER_FRAME,onEnterFrame);
 				}
-				
-				
-				invokation = invokationQueue.shift();
-				log("final invocation",invokation);
-				invokation.execute();
-				invokation.destroy();
-				
 				running = false;
+				return;
 			}
+			log(currentInvokation);
+			currentInvokation.execute();
 		}
 		
 		protected function log(...params):void

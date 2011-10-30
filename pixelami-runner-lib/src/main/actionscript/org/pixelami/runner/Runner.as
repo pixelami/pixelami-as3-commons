@@ -12,6 +12,8 @@
 package org.pixelami.runner
 {
 	import flash.display.LoaderInfo;
+	
+	import org.pixelami.runner.impl.RunnerImpl;
 
 
 	public class Runner
@@ -28,7 +30,7 @@ package org.pixelami.runner
 		private static var _instance:IRunner;
 		public static function get instance():IRunner
 		{
-			if(!_instance) _instance = new RunnerImpl(loaderInfo);
+			if(!_instance) _instance = new org.pixelami.runner.impl.RunnerImpl(loaderInfo);
 			return _instance;
 		}
 		

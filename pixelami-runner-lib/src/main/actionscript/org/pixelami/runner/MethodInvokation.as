@@ -24,10 +24,12 @@ package org.pixelami.runner
 		
 		private static var _instances:Vector.<MethodInvokation> = new Vector.<MethodInvokation>();
 		
+		public var parent:MethodInvokation;
+		
 		/**
 		 * @return MethodInvocation instance - use this method to leverage instance pooling strategy
 		 */
-		public static function getMethodInvokation(method:Function, args:Array, scope:*=null):MethodInvokation
+		public static function getMethodInvokation(method:Function, args:Array=null, scope:*=null):MethodInvokation
 		{
 			var mi:MethodInvokation;
 			if(_instances.length > 0) 
@@ -69,15 +71,17 @@ package org.pixelami.runner
 			id = INVOKATION_INSTANCE_ID++;
 		}
 		
+		private var _executed:Boolean;
 		/**
 		 * executes the method
 		 */
 		public function execute():void
 		{
 			this.method.apply(this.scope,this.args);
+			_executed = true;
 		}
 		
-		public function destroy():void
+		public function recycle():void
 		{
 			if(_instances.length < MAX_INSTANCES)
 			{
@@ -88,7 +92,24 @@ package org.pixelami.runner
 		
 		public function toString():String
 		{
-			return method.length +", "+ id ;
+			var pid:String = parent ? String(parent.id) : "null"
+			return "Invokation - [id=" + id + " parent id=" + pid + "]";
+		}
+		
+		private var _childInvokations:Vector.<MethodInvokation> = new Vector.<MethodInvokation>();
+		public function addChildInvokation(methodInvokation:MethodInvokation):void
+		{
+			methodInvokation.parent = this;
+			_childInvokations.push(methodInvokation);
+		}
+		
+		public function getNextInvokation():MethodInvokation
+		{
+			if(!_executed) return this;
+			if(_childInvokations.length > 0) return _childInvokations.shift();
+			destroy();
+			if(parent) return parent.getNextInvokation();
+			return null;
 		}
 	}
 }

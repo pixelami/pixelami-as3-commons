@@ -3,11 +3,10 @@ package org.pixelami.runner
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
-	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
 	import org.flexunit.async.Async;
 
-	public class RunnerTest
+	public class NestedRunnerTests
 	{		
 		public var dispatcher:EventDispatcher = new EventDispatcher();
 		
@@ -31,20 +30,13 @@ package org.pixelami.runner
 		{
 		}
 		
-		[Test]
-		public function dummyTest():void	
-		{
-			assertTrue(true);
-		}
-		
-		
-		[Ignore(description="The test using org.pixelami.runner.RunnerImpl break in flemojos, but work in Flash Builder 4/4.5")]
+		//[Ignore(description="The test using org.pixelami.runner.RunnerImpl break in flemojos, but work in Flash Builder 4/4.5")]
 		[Test(async,timeout=2000)]
 		public function simpleProcessTest():void
 		{
-			var p:SaySomethingProcess = new SaySomethingProcess();
+			var p:SaySomethingNestedProcess = new SaySomethingNestedProcess();
 			p.addEventListener(Event.COMPLETE,asyncCompleteHandler);
-
+			
 			Async.proceedOnEvent(this,dispatcher,Event.COMPLETE,2000,timeoutHandler);
 			p.start();
 			//p.complete();
