@@ -13,7 +13,7 @@ package org.pixelami.util
 {
 	public class TypedAttribute implements IAttribute
 	{
-		private static const SIMPLE_TYPES:Array = ["String","Number","int","uint","Boolean"]
+		public static const SIMPLE_TYPES:Array = ["String","Number","int","uint","Boolean"]
 		
 		private var _name:String;
 		private var _value:*;

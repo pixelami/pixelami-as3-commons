@@ -9,7 +9,7 @@ Pixelami Actionscript Commons
 ------------------------------------------------------------------------------------------------------------------------
 Including:
 
-pixelami-amf-lib - An Actionscript 3 library to serialize objects to a from AS3
+pixelami-amf-lib - An Actionscript 3 library to serialize objects to a from AMF3
 pixelami-runner-lib - A Actionscript 3 library to queue and run methods across multiple frames if necessary
 
 
@@ -51,16 +51,15 @@ run(myMethod,[myArg0,myArg1,myArg2],scope)
 Below the hood
 ______________
 
-Functions are queued in a single stack.
+run() basically uses function.apply(scope,method,arguments).
 
-A single enterFrame handler shifts methods off the stack and passes an optional array of arguments 
-and optional scope argument to the apply() method of each Function.
+a method invoked using run() can also invoke further nested calls to run() since it uses a nested stack.
 
 The Runner attempts to throttle how many methods get called per frame, thereby allowing the developer to 
 spread heavy processing tasks across several frames rather than grinding the frame rate to a halt 
 and blocking display updates.
 
-Well that's the theory at least.
+See example apps.
 
 
 How to

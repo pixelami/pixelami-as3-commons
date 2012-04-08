@@ -48,7 +48,7 @@ package org.pixelami.runner.impl
 			if(!currentInvokation)
 			{
 				currentInvokation = MethodInvokation.getMethodInvokation(function():void{
-					trace("root invokation executed");
+					log("root invokation executed");
 				});
 			}
 			
